@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Food modify</title>
+</head>
+<body>
+
+<div class="row mt-3">
+    <div class="col">
+        <div class="card">
+            <div class="card-header">
+                Food Modify
+            </div>
+            <div class="card-body">
+                <form th:action="@{/food/modify}" method="post" id="f1">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">FOODNAME</span>
+                        <input type="text" class="form-control" th:value="${dto.foodName}" name="foodName" >
+                    </div>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">CATEGORY</span>
+                        <input type="text" class="form-control" name="category" th:value="${dto.category}">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">DESCRIPTION</span>
+                        <textarea class="form-control col-sm-5" rows="5" name="description">[[${dto.description}]]</textarea>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">PRICE</span>
+                        <input type="number" class="form-control" th:value="${dto.price}" name="price" >
+                    </div>
+
+
+                    <div class="my-4">
+                        <div class="float-end">
+                           <button type="button" class="listBtn">List</button>
+                            <button type="button" class="modBtn">Modify</button>
+                            <button type="button" class="removeBtn">Remove</button>
+                    </div>
+                    </div>
+                </form>
+
+
+            </div><!--end card body-->
+        </div><!--end card-->
+    </div><!-- end col-->
+</div><!-- end row-->
+</body>
+
+
+<script th:inline="javascript">
+
+
+    const formObj = document.querySelector("#f1")
+    const link = [[${requestDTO.getLink()}]]
+
+
+    document.querySelector(".modBtn").addEventListener("click", function(e){
+        e.preventDefault()
+        e.stopPropagation()
+        console.log("수정")
+        formObj.action = `/food/modify?${link}`
+        formObj.method ='post'
+        formObj.submit()
+
+
+    }, false)
+
+
+    document.querySelector(".removeBtn").addEventListener("click", function(e){
+        e.preventDefault()
+        e.stopPropagation()
+        console.log("삭제")
+        formObj.action = `/food/remove`
+        formObj.method ='post'
+        formObj.submit()
+    }, false)
+
+    document.querySelector(".listBtn").addEventListener("click", function(e){
+        e.preventDefault()
+        e.stopPropagation()
+        console.log("리스트")
+        formObj.reset()
+        self.location =`/food/list?${link}`
+
+    }, false)
+
+
+</script>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div>
+    <button type="button">나가기</button>
+    <a th:href="@{/food/register}"> <button type="button">등록</button></a>
+</div><br>
+    <div class="row mt-3">
+        <form action="/food/list" method="get">
+            <div class="col">
+
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <select class="form-select" name="type">
+                            <option value="">---</option>
+                            <option value="n" th:selected="${requestDTO.type =='n'}">음식명</option>
+                            <option value="d" th:selected="${requestDTO.type =='d'}">설명</option>
+                            <option value="nd" th:selected="${requestDTO.type =='nd'}">음식명 + 설명</option>
+
+                        </select>
+                    <input type="text" class="form-control" name="keyword" th:value="${requestDTO.keyword}">
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary searchBtn" type="submit">Search</button>
+                        <button class="btn btn-outline-secondary clearBtn" type="button">Clear</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+<br>
+
+    <div class="row mt-3">
+        <div class="col">
+
+            <div class="card">
+                <div class="card-header">
+                    Food List
+                </div>
+                <div class="card-body" >
+                    <h5 class="card-title">Food List </h5>
+
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">FOODNAME</th>
+                            <th scope="col">CATEGORY</th>
+                            <th scope="col">DESCRIPTION</th>
+                            <th scope="col">PRICE</th>
+                        </tr>
+                        </thead>
+
+                        <tbody th:with="link = ${requestDTO.getLink()}">
+
+                        <tr th:each="dto:${responseDTO.dtoList}">
+                            <th scope="row"><a th:href="|@{/food/read(foodName =${dto.foodName})}&${link}|">[[${dto.foodName}]]</a></th>
+                            <td>[[${dto.category}]]</td>
+                            <td>[[${dto.description}]]</td>
+                            <td>[[${dto.price}]]</td>
+
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+
+                </div><!--end card body-->
+            </div><!--end card-->
+        </div><!-- end col-->
+    </div><!-- end row-->
+
+<script th:inline="javascript">
+    document.querySelector(".clearBtn").addEventListener("click", function (e){
+        e.preventDefault()
+        e.stopPropagation()
+
+        self.location =`/food/list`
+
+    },false)
+
+</script>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Register</title>
+</head>
+
+    <div class="row mt-3">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Food Register
+                </div>
+                <div class="card-body">
+                    <form action="/food/register" method="post">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">FOODNAME</span>
+                            <input type="text" name="foodName" class="form-control" placeholder="foodName">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">DESCRIPTION</span>
+                            <textarea class="form-control col-sm-5" rows="5" name="description"></textarea>
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">CATEGORY</span>
+                            <input type="text" name="category" class="form-control" placeholder="category">
+                        </div>
+
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">PRICE</span>
+                            <input type="text" name="price" class="form-control" placeholder="price">
+                        </div>
+
+                        <div class="my-4">
+                            <div class="float-end">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="reset" class="btn btn-secondary">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                </div><!--end card body-->
+
+            </div><!--end card-->
+        </div><!-- end col-->
+    </div><!-- end row-->
+</div>
+
+
+<script th:inline="javascript">
+
+    const errors = [[${errors}]]
+    console.log(errors)
+
+    let errorMsg = ''
+
+    if(errors){
+        for (let i = 0; i < errors.length; i++) {
+            errorMsg += `${errors[i].field}은(는) ${errors[i].code} \n`
+        }
+        alert(errorMsg)
+    }
+
+</script>
+</html>
